@@ -1,1 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap');
+@import url("https://use.typekit.net/xxl3arz.css");
 @import "tailwindcss";
+
+@theme {
+
+  --color-primary-blue: #009AD5;
+  --color-dark-blue: #26448C;
+  --color-light-blue: #96D4E5;
+  --color-main-dark: #2F4195;
+  --color-main-light: #4098D6;
+  --color-main-bgcolor: #DCECF1;
+
+  --font-body: 'Poppins', sans-serif;
+  --font-title: 'Bowlby One', sans-serif;
+
+  --text-header: 60px;
+  --text-subheader-l: 45px;
+  --text-subheader-s: 24px;
+  --text-body: 16px;
+  --text-accent: 18px;
+
+  --text-line-height: 1.5;
+  --text-letter-spacing: -1px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+}

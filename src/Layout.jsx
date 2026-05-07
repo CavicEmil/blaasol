@@ -5,9 +5,9 @@ import Footer from './components/Footer';
 export default function Layout() {
     console.log('layout rendering correct')
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-main-bgcolor">
             <Header />
-            <main className="grow"> 
+            <main className="grow "> 
                 <Outlet />
             </main>
             <Footer />
