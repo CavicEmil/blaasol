@@ -41,7 +41,7 @@ import './App.css';
     },
   ],
     {
-      basename:'/volunteer'
+      basename:'/blaasol/',
     }
 );
 

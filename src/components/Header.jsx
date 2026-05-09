@@ -9,20 +9,24 @@ export default function Header() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scollY > 10) {
+            if (window.scrollY > 10) {
                 setIsScrolled(true);
             } else {
                 setIsScrolled(false);
             }
         };
         window.addEventListener('scroll', handleScroll);
+        console.log('isscrolled is', isScrolled);
         return() => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+ /*   */
 
     return (
-        <header className="w-full h-[60px] min-h-[60px] flex items-center justify-between p-4 top-4 absolute z-[9999] gap-x-[1vw]">
+        <header className="w-full h-[60px] min-h-[60px] flex items-center justify-between p-8 top-4 fixed bg-transparent z-[9999] gap-x-[1vw] transition-colors duration-400
+           ${isScrolled ? 'bg-main-ight sticky' : 'bg-transparent fixed'}
+        ">  
             <Burger />
 
             <Link to="/" className="flex-1 flex justify-center">
