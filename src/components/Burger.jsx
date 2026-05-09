@@ -12,6 +12,7 @@ export default function Burger() {
     { name: 'frivillig', path: '/' },
     { name: 'partner', path: '#' },
     { name: 'blå shop', path: '#' },
+    { name: 'Login', path: '/auth' }
   ];
 
   const toggleMenu = () => {
@@ -54,8 +55,8 @@ export default function Burger() {
                 <Link
                   to={item.path}
                   onClick={closeMenu}
-                  className={`font-title text-subheader-s text-white active:rotate-[15deg] transition-transform duration-300
-                    ${item.path === '/' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                  className='font-title text-subheader-s text-white active:rotate-[15deg] transition-transform duration-300'
+            
                 >
                   {item.name}
                 </Link>

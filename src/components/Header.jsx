@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '/logo_26.png';
-import profileIcon from '/lofiprofile.png';
+import koebbillet from '/koeb-billet.svg';
 import Burger from './Burger';
 
 export default function Header() {
@@ -21,7 +21,7 @@ export default function Header() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
- /*   */
+
 
     return (
         <header className="w-full h-[60px] min-h-[60px] flex items-center justify-between p-8 top-4 fixed bg-transparent z-[9999] gap-x-[1vw] transition-colors duration-400
@@ -37,10 +37,10 @@ export default function Header() {
                 />
             </Link>
 
-            <Link to="/auth" className="flex items-center justify-center">
+            <Link to="/" className="flex items-center justify-center">
                 <img
-                src={profileIcon}
-                alt="Profile"
+                src={koebbillet}
+                alt="Køb billeter"
                 className="h-10 w-auto"
                 />
             </Link>
