@@ -1,33 +1,54 @@
 import { Link, useLocation } from 'react-router-dom';
-import homeIcon from '/home.svg';
-import rolesIcon from '/roles.svg';
-import lofiProfile from '/lofiprofile.png';
+import navFriendsActIcon from '/nav-friends-act.svg';
+import navFriendsIcon from '/nav-friends.svg';
+import navHomeActIcon from '/nav-home-act.svg';
+import navHomeIcon from '/nav-home.svg';
+import navMessageActIcon from '/nav-message-act.svg';
+import navMessageIcon from '/nav-message.svg';
+import navProfileActIcon from '/nav-profile-act.svg';
+import navProfileIcon from '/nav-profile.svg';
+import navRolesActIcon from '/nav-profile-act.svg';
+import navRolesIcon from '/nav-roles.svg';
 
-export default function Footer() {
+
+export default function AppFooter() {
   const location = useLocation();
+  const noFeet = ['/', '/signup', '/login']
 
-  // Don't render this footer on Landing page
-  if (location.pathname === '/') {
+  if (noFeet.includes(location.pathname)) {
     return null;
   }
 
+     const navItems = [
+    { path: '/friends', icon: navFriendsIcon, activeIcon: navFriendsActIcon, label: 'Venner' },
+    { path: '/roles', icon: navRolesIcon, activeIcon: navRolesActIcon, label: 'Roller' },
+    { path: '/dashboard', icon: navHomeIcon, activeIcon: navHomeActIcon, label: 'Hjemme' },
+    { path: '/messages', icon: navMessageIcon, activeIcon: navMessageActIcon, label: 'Beskeder' },
+    { path: '/profile', icon: navProfileIcon, activeIcon: navProfileActIcon, label: 'Profil' }
+  ];
+
   return (
-    <footer className="fixed bottom-0 left-0 w-full h-[10vh] bg-main-bgcolor border-t border-solid border-main-light z-[9999]">
-      <div className="w-full h-full flex justify-evenly items-center px-4">
-        {/* Home Icon */}
-        <Link to="/dashboard" className="flex flex-col items-center gap-1 hover:opacity-80 transition-opacity">
-          <img src={homeIcon} alt="Dashboard" className="h-[24px] w-auto" />
-        </Link>
-
-        {/* Roles Icon */}
-        <Link to="/roles" className="flex flex-col items-center gap-1 hover:opacity-80 transition-opacity">
-          <img src={rolesIcon} alt="Roles" className="h-[24px] w-auto" />
-        </Link>
-
-        {/* Profile Icon */}
-        <Link to="/profile" className="flex flex-col items-center gap-1 hover:opacity-80 transition-opacity">
-          <img src={lofiProfile} alt="Profile" className="h-[24px] w-auto" />
-        </Link>
+    <footer className="fixed bottom-0 left-0 w-full h-[10vh] bg-main-pink z-[9999]">
+      <div className="w-full h-full flex justify-evenly items-center">
+        {navItems.map((item, index) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={index}
+              to={item.path}
+              className="flex flex-col items-center gap-1 hover:opacity-80 transition-opacity"
+            >
+              <img
+                src={isActive ? item.activeIcon : item.icon}
+                alt={item.label}
+                className="w-[28px] h-auto"
+              />
+              <span className="text-main-dark font-body text-body text-accent font-medium">
+                {item.label}
+              </span>
+            </Link>
+          );
+        })}
       </div>
     </footer>
   );

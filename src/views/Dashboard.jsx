@@ -1,117 +1,314 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import lofiProfile from '/lofiprofile.png';
+import cardBg1 from '/cardbg1.svg';
+import cardBg2 from '/cardbg2.svg';
+import cardBg3 from '/cardbg3.svg';
+import defaultProfile from '/defaultprofile.svg';
+import defaultFriend from '/defaultfriend.svg';
 import editIcon from '/edit.svg';
-import addUserIcon from '/add-user.svg';
-import closeIcon from '/closehvid.svg';
 import searchIcon from '/search.svg';
+import deleteIcon from '/delete.svg';
 
 export default function Dashboard() {
-  const [showAddFriends, setShowAddFriends] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  // Default dummy data (will be replaced with real user data later)
+  const [userData, setUserData] = useState({
+    profilePicture: null, // Will be user's profile picture URL
+    name: null,           // Will be user's name
+    role: null,           // Will be user's role
+    friendGroup: null,    // Will be user's friend group
+    friends: null,
+    teamTitle: null,
+    contactPerson: null,
+    applications: null,
+    appliedWithFriends: null,
+  });
+
+  // Default values
+  const defaultData = {
+    profilePicture: defaultProfile,
+    name: "Rico",
+    role: "-",
+    friendGroup: "-",
+    friends: [],
+    teamTitle: "ingen venner tilføjet endnu",
+    contactPerson: null,
+    applications: [],
+    appliedWithFriends: false
+  };
+
+  // Use default data if user data is empty
+  const displayData = {
+    profilePicture: userData.profilePicture || defaultData.profilePicture,
+    name: userData.name || defaultData.name,
+    role: userData.role || defaultData.role,
+    friendGroup: userData.friendGroup || defaultData.friendGroup,
+    friends: userData.friends || defaultData.friends,
+    teamTitle: userData.teamTitle || defaultData.teamTitle,
+    contactPerson: userData.contactPerson || defaultData.contactPerson,
+    applications: userData.applications || defaultData.applications,
+    appliedwithFriends: userData.appliedWithFriends ?? defaultData.appliedWithFriends
+  };
 
   return (
-    <div className="min-h-screen bg-main-bgcolor pt-[15vh] p-4 space-y-4">
-      {/* Profile Card (20% screen height) */}
-      <div className="h-[20vh] flex flex-col items-center justify-center px-4 relative">
-        <img
-          src={lofiProfile}
-          alt="Profile"
-          className="w-20 h-20 rounded-full mb-4"
-        />
-        <div className="flex items-center gap-2">
-          <h2 className="text-main-light font-title text-subheader-s">
-            Hejså Rico!
-          </h2>
-          <Link to="/profile" className="hover:opacity-80 transition-opacity">
-            <img src={editIcon} alt="Edit Profile" className="h-6 w-6" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Crew Card */}
-      <div className="bg-white/10 p-4 rounded-lg">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="text-main-dark font-title text-subheader-s mb-2">
-              Dit crew:
-            </h3>
-            <p className="text-main-light font-body text-accent font-medium">
-              Du har ingen venner tilføjet
-            </p>
-          </div>
-          <button
-            onClick={() => setShowAddFriends(true)}
-            className="h-[40px] w-[40px] flex-shrink-0"
-          >
+    <div className="min-h-screen bg-main-bgcolor">
+      {/* First Section - Profile Card */}
+      <div
+        className='w-[95vw] h-[20vh] m-4 mx-auto bg-cardbg3 relative' 
+        >
+        <div className="flex items-center h-full gap-4">
+          {/* Profile Picture */}
+          <div className="w-[30vw] mx-2 h-full flex-shrink-0">
             <img
-              src={addUserIcon}
-              alt="Add Friends"
-              className="h-full w-full"
+              src={displayData.profilePicture}
+              alt="Profile"
+              className="w-full h-full object-fit rounded-full drop-shadow-lg"
             />
-          </button>
-        </div>
-      </div>
-
-      {/* Tasks Card */}
-      <div className="bg-white/10 p-4 rounded-lg">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-main-dark font-title text-subheader-s mb-2">
-              Dine Opgaver:
-            </h3>
-            <p className="text-main-light font-body text-accent font-medium">
-              Du har ikke fået tildelt en opgave endnu
-            </p>
           </div>
-          <Link
-            to="/roles"
-            className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity flex items-center gap-2"
-            >
-            søg
-            <span className="text-lg">{'>'}</span>
-          </Link>
-        </div>
-      </div>
 
-      {/* AddFriends Overlay with Search */}
-      {showAddFriends && (
-        <div className="fixed inset-0 bg-black/50 flex flex-col items-center justify-start pt-[10vh] z-50">
-          <div className="bg-main-bgcolor w-[90%] max-w-md rounded-lg p-6 relative">
-            {/* Close Button (Top Right) */}
-            <button
-              onClick={() => setShowAddFriends(false)}
-              className="absolute top-4 right-4 w-[36px] h-[36px] p-1"
-            >
-              <img src={closeIcon} alt="Close" className="w-full h-full" />
-            </button>
+          {/* Text Content */}
+          <div className="flex flex-col justify-center flex-1">
+            {/* Title with Edit Button */}
+            <div className="flex items-center gap-2 mb-2">
+              <h1 className="text-white text-shadow-title uppercase font-title text-subheader-s">
+                Hejsa, {displayData.name}
+              </h1>
+              <Link to="/profile" className="hover:opacity-80 transition-opacity">
+                <img src={editIcon} alt="Edit" className="h-8 w-8" />
+              </Link>
+            </div>
 
-            {/* Title */}
-            <h2 className="text-main-light font-title text-subheader-s mb-6 text-center">
-              Tilføj venner
-            </h2>
+            {/* Labels with Overlay Effect */}
+            <div className="flex gap-4">
+              {/* Role Label */}
+              <div className="relative inline-block">
+                <div className="relative px-4 py-2 bg-white text-main-dark font-body text-body shadow-label">
+                  Rolle: {displayData.role}
+                </div>
+              </div>
 
-            {/* Search Bar */}
-            <div className="relative mb-6">
-              <input
-                type="text"
-                placeholder="Navn, E-Mail, Telefonnr.,.."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full p-3 bg-transparent border border-white/50 rounded-none text-white placeholder-white/70 focus:outline-none focus:border-main-light"
-              />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <img src={searchIcon} alt="Search" className="h-5 w-5" />
+              {/* Friend Group Label */}
+              <div className="relative inline-block">
+                <div className="absolute inset-0 bg-primary-dark transform rotate-[2deg] rounded-lg"></div>
+                <div className="relative px-4 py-2 bg-white text-main-dark font-body text-body shadow-label">
+                  Hold: {displayData.friendGroup}
+                </div>
               </div>
             </div>
-
-            {/* Placeholder for search results */}
-            <div className="text-center text-white/70">
-              <p>Søg efter venner for at tilføje dem til dit crew</p>
-            </div>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Friends Section */}
+      <div className="py-4">
+        <h2 className="text-main-dark font-title text-subheader-s uppercase m-4">
+          Dit venner hold:
+        </h2>
+
+        <div
+          className="w-[95vw] h-[20vh] m-2 mx-auto bg-cardbg1 relative"
+        >
+          {/* Team Title (if exists) */}
+          {displayData.teamTitle && (
+            <div className="absolute top-0 left-0 bg-white uppercase text-main-dark font-title text-body shadow-label p-2">
+              {displayData.teamTitle}
+            </div>
+          )}
+
+          {/* Search Icon (top right) */}
+          <Link to="/friends" className="absolute -top-6 -right-2 w-18 h-18">
+            <img src={searchIcon} alt="Search Friends" className="h-18 w-18" />
+          </Link>
+
+          {/* Friends List or Fallback Text */}
+          <div className="absolute inset-0 flex flex-col justify-center items-center p-4">
+            {displayData.friends && displayData.friends.length > 0 ? (
+              <>
+                {/* Team Title (if not shown above) */}
+                {!displayData.teamTitle && (
+                  <h3 className="bg-white text-main-dark font-title text-body shadow-label p-2 mb-4">
+                    {displayData.teamTitle || "Mit hold"}
+                  </h3>
+                )}
+
+                {/* Friends List */}
+                <div className="flex gap-4 overflow-x-auto w-full">
+                  {displayData.friends.map((friend, index) => (
+                    <div key={index} className="flex flex-col items-center flex-shrink-0">
+                      <img
+                        src={friend.profilePicture || defaultFriend}
+                        alt={friend.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <p className="text-main-dark font-body text-sm truncate w-12 text-center">
+                        {friend.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              /* Fallback Text */
+              <p className="text-main-dark font-body font-regular tracking-[var(--text-letter-spacing)] pt-4">
+                Find dine venner i databasen, opret dit hold og ansøg om frivillige roller sammen.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Third Section - Role and Contact Person */}
+      <div className="flex w-[95vw] mx-auto gap-4 p-2">
+        {/* Role Card */}
+        <div className="w-1/2">
+          <h2 className="text-main-dark font-title text-subheader-s uppercase mb-2">
+            Rolle:
+          </h2>
+          <div
+            className="w-full h-[20vh] bg-cover bg-center bg-cardbg3 relative"
+          >
+            {displayData.userRole ? (
+              <>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <img src={roleIcon} alt="Role" className="h-12 w-12 mb-2" />
+                  <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)]">
+                    {displayData.userRole}
+                  </p>
+                </div>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                  <Link
+                    to="/roles"
+                    className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+                  >
+                    Søg
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                <p className="text-main-dark font-body text-body uppercase font-[500] tracking-[var(--text-letter-spacing)] text-center pt-6 m-2">
+                  Ikke tildelt en rolle endnu
+                </p>
+                <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] text-center mb-4">
+                  Klik på "Søg" for at finde en
+                </p>
+                <div className="relative w-[130%] h-[60px] mt-4 translate-y-[1vh]">
+                  <div className="absolute w-[100%] mx-auto inset-0 transform -translate-y-[5px] bg-main-pink rotate-[1deg]"></div>
+                  <Link
+                    to="/roles"
+                    className="px-6 py-2 bg-main-light text-white font-body text-accent font-medium mx-auto w-[98%] block py-3 bg-main-dark text-white text-center font-body text-accent font-medium rotate-[2deg] z-10"
+                  >
+                    Søg
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Contact Person Card */}
+        <div className="w-1/2">
+          <h2 className="text-main-dark font-title text-subheader-s uppercase mb-2 wrap-break-word">
+            Kontakt-person:
+          </h2>
+          <div
+            className="w-full h-[20vh] bg-cover bg-center bg-cardbg1 relative"
+          >
+            {displayData.contactPerson ? (
+              <>
+                <div className="absolute inset-0 flex flex-col p-4">
+                  <div className="flex items-center gap-4 mb-4">
+                    {/* Profile Picture */}
+                    <div className="w-1/2">
+                      <img
+                        src={displayData.contactPerson.profilePicture || defaultProfile}
+                        alt={displayData.contactPerson.name}
+                        className="w-full h-auto object-cover rounded-lg"
+                      />
+                    </div>
+                    {/* Name and Role */}
+                    <div className="w-1/2">
+                      <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] mb-2">
+                        {displayData.contactPerson.name}
+                      </p>
+                      <div className="relative inline-block">
+                        <div className="absolute inset-0 bg-primary-dark transform rotate-[2deg] rounded-lg"></div>
+                        <div className="relative px-3 py-1 bg-white text-main-dark font-body text-sm tracking-[var(--text-letter-spacing)] -rotate-[1deg] z-10">
+                          {displayData.contactPerson.role}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Send Message Button */}
+                  <div className="flex justify-center mt-auto">
+                    <button className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity">
+                      Send besked
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                <p className="text-main-dark font-body text-body uppercase font-[500] tracking-[var(--text-letter-spacing)] text-center mb-2">
+                  Ikke tildelt en kontaktperson endnu
+                </p>
+                <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] text-center">
+                  Kontaktoplysninger vises her, når du er tildelt en rolle
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Fourth Section - Mine Ansøgninger */}
+      <div className="w-[95vw] mx-auto pt-2 pb-16">
+        <h2 className="text-main-dark font-title text-subheader-s uppercase mb-4">
+          Mine Ansøgninger
+        </h2>
+
+        <div className="w-full h-[20vh] bg-cardbg3 relative">
+          {userData.applications ? (
+            <div className="absolute inset-0 flex flex-col p-4">
+              {/* Role */}
+              <p className="text-main-dark font-body text-accent font-semibold text-left tracking-[var(--text-letter-spacing)] mb-2">
+                Rolle: {displayData.role}
+              </p>
+
+              {/* Applied with friends */}
+              {displayData.appliedWithFriends && (
+                <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] mb-4">
+                  Ansøgt med venner
+                </p>
+              )}
+
+              {/* Application Status Sections */}
+              <div className="flex justify-center gap-8 mb-4 text-main-dark font-body text-body tracking-[var(--text-letter-spacing)]">
+                <span>Ansøgt</span>
+                <span>Godkendt</span>
+                <span>Hold tildelt</span>
+              </div>
+
+              {/* Delete Application */}
+              <div className="flex items-center justify-center gap-2">
+                <img src={deleteIcon} alt="Delete" className="h-5 w-5" />
+                <button className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)]">
+                  Slet ansøgning
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="absolute inset-0 flex flex-col p-4">
+              <p className="text-main-dark font-body text-body uppercase font-[500] tracking-[var(--text-letter-spacing)] text-left m-2">
+                Ingen ansøgninger endnu
+              </p>
+              <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] text-left m-2 pt-6">
+                Når du ansøger om en rolle, kan du følge status her
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className='py-8'></div>
     </div>
   );
 }

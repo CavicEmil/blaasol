@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './Layout';
 import Landing from './views/Landing';
-import Auth from './views/Auth';
+import Login from './views/Login';
 import Dashboard from './views/Dashboard';
+import Friends from './views/Friends';
 import Profile from './views/Profile';
 import Roles from './views/Roles';
 import SignUp from './views/SignUp';
@@ -18,12 +19,16 @@ import './App.css';
           element: <Landing />,
         },
         {
-          path: '/auth',
-          element: <Auth />
+          path: '/login',
+          element: <Login />
         },
         {
           path: '/dashboard',
           element: <Dashboard />
+        },
+        {
+          path: '/friends',
+          element: <Friends />
         },
         {
           path: '/profile',

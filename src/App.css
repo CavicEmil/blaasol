@@ -10,6 +10,7 @@
   --color-main-dark: #2F4195;
   --color-main-light: #4098D6;
   --color-main-bgcolor: #DCECF1;
+  --color-main-pink: #E3ABCA;
 
   --font-body: 'Poppins', sans-serif;
   --font-title: 'Bowlby One', sans-serif;
@@ -26,5 +27,27 @@
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+ 
+  --text-shadow-title: 3px 3px 0 #4098D6;
+  --shadow-label: 3px 3px 0 #2F4195;
 
+
+}
+
+.bg-cardbg1{
+  background-image: url('/cardbg1.svg');
+  background-size: cover;
+  background-position: center;  
+}
+
+.bg-cardbg2{
+  background-image: url('/cardbg2.svg');
+  background-size: cover;
+  background-position: center;  
+}
+
+.bg-cardbg3{
+  background-image: url('/cardbg3.svg');
+  background-size: cover;
+  background-position: center;  
 }
