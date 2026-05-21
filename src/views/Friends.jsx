@@ -19,7 +19,7 @@ const dummyUsers = [
 
 // Helper function to get profile image URL
 const getProfileImg = (user) => {
-  if (!user.profileImg) return defaultFriend;
+  if (!user?.profileImg) return defaultFriend;
   try {
     return require(`../public/${user.profileImg}`);
   } catch {
@@ -41,6 +41,7 @@ export default function Friends() {
   const [showRemoveConfirmation, setShowRemoveConfirmation] = useState(false);
   const [userToRemove, setUserToRemove] = useState(null);
   const [isRemovingFromInvited, setIsRemovingFromInvited] = useState(false);
+  const [invitationsSent, setInvitationsSent] = useState(false);
 
   // Create a new friend team
   const createFriendTeam = () => {
@@ -53,6 +54,7 @@ export default function Friends() {
     };
     setFriendTeam(newTeam);
     setTeamName('');
+    setInvitationsSent(false);
   };
 
   // Handle search
@@ -76,7 +78,6 @@ export default function Friends() {
   const addToInvited = (user) => {
     if (!friendTeam) return;
 
-    // Don't add if already in invited or members
     if (friendTeam.invited.some(u => u.id === user.id) ||
         friendTeam.members.some(id => id === user.id)) {
       return;
@@ -101,10 +102,7 @@ export default function Friends() {
   const addToMembers = (user) => {
     if (!friendTeam) return;
 
-    // Remove from invited if present
     const updatedInvited = friendTeam.invited.filter(u => u.id !== user.id);
-
-    // Add to members if not already there
     if (!friendTeam.members.some(id => id === user.id)) {
       setFriendTeam(prev => ({
         ...prev,
@@ -112,15 +110,6 @@ export default function Friends() {
         invited: updatedInvited
       }));
     }
-  };
-
-  // Remove user from members
-  const removeFromMembers = (userId) => {
-    setFriendTeam(prev => ({
-      ...prev,
-      members: prev.members.filter(id => id !== userId)
-    }));
-    setShowRemoveConfirmation(false);
   };
 
   // Handle team name edit
@@ -140,6 +129,7 @@ export default function Friends() {
   const sendInvitations = () => {
     setSearchQuery('');
     setSearchResults([]);
+    setInvitationsSent(true);
   };
 
   // Get user by ID (for displaying members)
@@ -257,8 +247,8 @@ export default function Friends() {
                 </div>
               )}
 
-              {/* Invited Section */}
-              {friendTeam.invited.length > 0 && (
+              {/* Invited Section (only visible before sending invitations) */}
+              {!invitationsSent && friendTeam.invited.length > 0 && (
                 <>
                   <h3 className="text-main-dark font-title text-subheader-s mb-4">
                     Inviteret:
@@ -295,8 +285,8 @@ export default function Friends() {
                 </>
               )}
 
-              {/* Send Invitations Button */}
-              {friendTeam.invited.length > 0 && (
+              {/* Send Invitations Button (only visible before sending) */}
+              {!invitationsSent && friendTeam.invited.length > 0 && (
                 <button
                   onClick={sendInvitations}
                   className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
@@ -307,8 +297,8 @@ export default function Friends() {
             </div>
           </div>
 
-          {/* Team Info Card (visible after sending invitations) */}
-          {friendTeam && (friendTeam.members.length > 1) && (
+          {/* Friend Team Card (always visible after team creation) */}
+          {friendTeam && invitationsSent && (
             <div className="w-[95vw] mx-auto">
               <h2 className="text-main-dark font-title text-subheader-s mb-4">
                 Dit vennerhold
@@ -349,8 +339,10 @@ export default function Friends() {
                 </h3>
                 <div className="flex flex-wrap gap-4 mb-6">
                   {friendTeam.members.map(memberId => {
-                    const user = getUserById(memberId);
-                    if (!user) return null;
+                    const user = memberId === 1337
+                      ? { id: 1337, name: "Dig", lastname: "", profileImg: null }
+                      : getUserById(memberId) || { id: memberId, name: "Ukendt", lastname: "", profileImg: null };
+
                     return (
                       <div key={memberId} className="flex flex-col items-center">
                         <img
@@ -368,57 +360,59 @@ export default function Friends() {
                     );
                   })}
                 </div>
-
-                {/* Pending Invitations */}
-                {friendTeam.invited.length > 0 && (
-                  <>
-                    <h3 className="text-main-dark font-title text-subheader-s mb-4">
-                      Afventende invitationer:
-                    </h3>
-                    <div className="flex flex-wrap gap-4 mb-6">
-                      {friendTeam.invited.map(user => (
-                        <div key={user.id} className="flex flex-col items-center relative">
-                          <button
-                            onClick={() => {
-                              setUserToRemove(user.id);
-                              setIsRemovingFromInvited(true);
-                              setShowRemoveConfirmation(true);
-                            }}
-                            className="absolute -top-2 -right-2 bg-white rounded-full p-1"
-                          >
-                            <img src={deleteIcon} alt="Remove" className="h-4 w-4" />
-                          </button>
-                          <img
-                            src={getProfileImg(user)}
-                            alt={user.name}
-                            className="w-16 h-16 rounded-full object-cover"
-                            onClick={() => addToMembers(user)}
-                          />
-                          <p className="text-main-dark font-body text-body font-semibold tracking-[var(--text-letter-spacing)]">
-                            {user.name}
-                          </p>
-                          <p className="text-main-dark font-body text-sm tracking-[var(--text-letter-spacing)]">
-                            {user.lastname}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="bg-main-light text-white font-body text-body p-3 rounded-lg mb-6">
-                      Husk! Alle venner skal acceptere, før I kan ansøge om frivillige roller sammen.
-                    </div>
-                  </>
-                )}
-
-                {/* Volunteer Roles Button */}
-                {friendTeam.members.length > 1 && friendTeam.invited.length === 0 && (
-                  <button
-                    onClick={() => navigate('/roles')}
-                    className="w-full px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
-                  >
-                    Frivillige roller
-                  </button>
-                )}
               </div>
+            </div>
+          )}
+
+          {/* Pending Invitations Section (no card background, appears after sending invitations) */}
+          {invitationsSent && friendTeam.invited.length > 0 && (
+            <div className="w-[95vw] mx-auto">
+              <h3 className="text-main-dark font-title text-subheader-s mb-4">
+                Afventende invitationer:
+              </h3>
+              <div className="flex flex-wrap gap-4 mb-6">
+                {friendTeam.invited.map(user => (
+                  <div key={user.id} className="flex flex-col items-center relative">
+                    <button
+                      onClick={() => {
+                        setUserToRemove(user.id);
+                        setIsRemovingFromInvited(true);
+                        setShowRemoveConfirmation(true);
+                      }}
+                      className="absolute -top-2 -right-2 bg-white rounded-full p-1"
+                    >
+                      <img src={deleteIcon} alt="Remove" className="h-4 w-4" />
+                    </button>
+                    <img
+                      src={getProfileImg(user)}
+                      alt={user.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                      onClick={() => addToMembers(user)}
+                    />
+                    <p className="text-main-dark font-body text-body font-semibold tracking-[var(--text-letter-spacing)]">
+                      {user.name}
+                    </p>
+                    <p className="text-main-dark font-body text-sm tracking-[var(--text-letter-spacing)]">
+                      {user.lastname}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-main-light text-white font-body text-body p-3 rounded-lg mb-6">
+                Husk! Alle venner skal acceptere, før I kan ansøge om frivillige roller sammen.
+              </div>
+            </div>
+          )}
+
+          {/* Volunteer Roles Button (only if no pending invitations and more than 1 member) */}
+          {invitationsSent && friendTeam.invited.length === 0 && friendTeam.members.length > 1 && (
+            <div className="w-[95vw] mx-auto">
+              <button
+                onClick={() => navigate('/roles')}
+                className="w-full px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+              >
+                Frivillige roller
+              </button>
             </div>
           )}
 
