@@ -12,7 +12,7 @@ export default function Burger() {
     { name: 'frivillig', path: '/' },
     { name: 'partner', path: '#' },
     { name: 'blå shop', path: '#' },
-    { name: 'Login', path: '/auth' }
+    { name: 'Login', path: '/login' }
   ];
 
   const toggleMenu = () => {

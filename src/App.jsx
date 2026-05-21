@@ -7,7 +7,11 @@ import Friends from './views/Friends';
 import Profile from './views/Profile';
 import Roles from './views/Roles';
 import SignUp from './views/SignUp';
+import RolesCards from './components/RolescArds';
+import RoleList from './components/RoleList';
+import RoleDetail from './components/RoleDetail';
 import './App.css';
+
 
   const router = createBrowserRouter([
     {
@@ -36,7 +40,21 @@ import './App.css';
         },
         {
           path: '/roles', 
-          element: <Roles />
+          element: <Roles />,
+          children: [
+            {
+              index: true,
+              element: <RolesCards />
+            },
+            {
+              path: ':shiftType',
+              element: <RoleList />
+            },
+            {
+              path:':shiftType/details',
+              element: <RoleDetail />
+            }
+          ]
         },
         {
           path: '/signup',

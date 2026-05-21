@@ -7,7 +7,7 @@ import navMessageActIcon from '/nav-message-act.svg';
 import navMessageIcon from '/nav-message.svg';
 import navProfileActIcon from '/nav-profile-act.svg';
 import navProfileIcon from '/nav-profile.svg';
-import navRolesActIcon from '/nav-profile-act.svg';
+import navRolesActIcon from '/nav-roles-act.svg';
 import navRolesIcon from '/nav-roles.svg';
 
 
