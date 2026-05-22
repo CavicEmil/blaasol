@@ -3,12 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '/logo_26.png';
 import notificationIcon from '/notification.svg';
 import backArrowIcon from '/backarrow.svg';
+import FeatureUnderConstruction from './FeatureUnderConstruction';
 
 
 export default function AppHeader() {
   const location = useLocation();
   const navigate = useNavigate();
-/*   const [showMessageOverlay, setShowMessageOverlay] = useState(false); */
   const [showNotificationOverlay, setShowNotificationOverlay] = useState(false);
   const getHeaderContent = () => {
     const path = location.pathname;
@@ -21,20 +21,24 @@ export default function AppHeader() {
         center: <img src={logo} alt="BLÅ SOL Festival Logo" className="h-auto max-h-[40px] w-auto" />,
         left: null,
         right: (
-          <button className="w-[24px] h-[24px] onClick={() => setShowNotificationOverlay(true)}">
+          <button className="w-9 h-9" onClick={() => setShowNotificationOverlay(true)}>
             <img src={notificationIcon} alt="Notifications" className="w-full h-full" />
           </button>
         )
       };
     }
-    else if (['/friends', '/roles','/messages','/profile'].includes(path)) {
+    else if (path.startsWith('/friends') ||
+         path.startsWith('/roles') ||
+         path.startsWith('/messages') ||
+         path.startsWith('/profile')) {
       const pageTitles = {
         '/friends': 'Venner',
         '/roles': 'Roller',
         '/messages': 'Beskeder',
         '/profile': 'Profil'
       };
-      const title = pageTitles[path] || '';
+      const basePath = '/' + path.split('/')[1];
+      const title = pageTitles[basePath] || '';
 
       return {
         center: <h1 className="text-main-light font-title text-subheader-s">{title}</h1>,
@@ -45,7 +49,7 @@ export default function AppHeader() {
           </button>
         ),
         right: (
-          <button className="w-[24px] h-[24px]" onClick={() => setShowNotificationOverlay(true)}>
+          <button className="w-9 h-9" onClick={() => setShowNotificationOverlay(true)}>
             <img src={notificationIcon} alt="Notifications" className="w-full h-full" />
           </button>
         )
@@ -83,30 +87,11 @@ export default function AppHeader() {
       </div>
     </header>
 
-      {/*  Message Overlay 
-      {showMessageOverlay && (
-        <div className="fixed top-[60px] right-0 bg-main-bgcolor p-4 shadow-lg z-[9998] rounded-bl-lg">
-          <p className="text-main-dark font-body text-body">intet at vise lige nu</p>
-          <button
-            onClick={() => setShowMessageOverlay(false)}
-            className="absolute top-2 right-2 text-main-dark hover:opacity-70"
-          >
-            ×
-          </button>
-        </div>
-      )} */}
-
-      {/* Notification Overlay */}
       {showNotificationOverlay && (
-        <div className="fixed top-[60px] right-0 bg-main-bgcolor p-4 shadow-lg z-[9998] rounded-bl-lg mt-16">
-          <p className="text-main-dark font-body text-body">intet at vise lige nu</p>
-          <button
-            onClick={() => setShowNotificationOverlay(false)}
-            className="absolute top-2 right-2 text-main-dark hover:opacity-70"
-          >
-            ×
-          </button>
-        </div>
+        <FeatureUnderConstruction
+          isOpen={showNotificationOverlay}
+          onClose={() => setShowNotificationOverlay(false)}
+        />
       )}
     </>
   );

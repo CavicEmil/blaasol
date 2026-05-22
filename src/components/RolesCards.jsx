@@ -48,17 +48,16 @@ export default function RolesCards() {
   const sixHourRoles = openRoles.filter(role => role.shiftDuration === 6);
 
   return (
-    <div className="min-h-screen bg-main-bgcolor p-4">
+    <div className="min-h-screen py-6 bg-main-bgcolor">
       {/* 10 Hour Shift Roles Card */}
-      <div className="w-[95vw] mx-auto mb-6">
+      <div className="w-[90vw] mx-auto mb-16">
         <div
-          className="w-full h-[30vh] bg-cover bg-center bg-cardbg3 relative p-6"
+          className="w-[90vw] mx-auto h-[30vh] bg-cover bg-center bg-cardbg3 relative p-4"
         >
           {/* Help Needed Label */}
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-0 right-0">
             <div className="relative inline-block">
-              <div className="absolute inset-0 bg-primary-dark transform rotate-[2deg] rounded-lg"></div>
-              <div className="relative px-3 py-1 bg-white text-main-dark font-body text-sm tracking-[var(--text-letter-spacing)] -rotate-[1deg] z-10">
+              <div className="relative px-3 py-1 shadow-label bg-main-pink text-white font-bold font-body text-sm tracking-[var(--text-letter-spacing)] rotate-[20deg] z-10">
                 HJÆLP SØGES
               </div>
             </div>
@@ -74,10 +73,11 @@ export default function RolesCards() {
                 10 timer fordelt på to vagter før og/eller efter festivaldagen
               </p>
             </div>
-            <div className="flex justify-start">
+            <div className="relative w-full h-[60px] mt-4 translate-y-[5vh]">
+              <div className="absolute mx-auto inset-0.5 transform -translate-y-[5px] bg-main-pink transform -rotate-[2deg] w-[85%] "></div>
               <Link
                 to="10h" 
-                className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+                className="relative mx-auto w-[85%] text-center mx-auto block py-3 bg-main-dark text-white font-body text-accent font-medium -rotate-[1deg] z-10"
               >
                 Udforsk roller
               </Link>
@@ -87,22 +87,20 @@ export default function RolesCards() {
       </div>
 
       {/* 6 Hour Shift Roles Card */}
-      <div className="w-[95vw] mx-auto mb-6">
+      <div className="w-[90vw] mx-auto mb-6">
         <div
-          className="w-full h-[30vh] bg-cover bg-center bg-cardbg3 relative p-6"
+          className="w-[90vw] mx-auto h-[30vh] bg-cover bg-center bg-cardbg3 relative p-6"
         >
           {/* Help Needed Label */}
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-0 right-0">
             <div className="relative inline-block">
-              <div className="absolute inset-0 bg-primary-dark transform rotate-[2deg] rounded-lg"></div>
-              <div className="relative px-3 py-1 bg-white text-main-dark font-body text-sm tracking-[var(--text-letter-spacing)] -rotate-[1deg] z-10">
-                HJÆLP SØGES
+              <div className="relative px-3 py-1 shadow-label bg-main-pink text-white font-bold font-body text-sm tracking-[var(--text-letter-spacing)] rotate-[20deg] z-10">                HJÆLP SØGES
               </div>
             </div>
           </div>
 
           {/* Content */}
-          <div className="flex flex-col justify-between h-full">
+          <div className="flex flex-col justify-between h-full pt-16">
             <div>
               <h2 className="text-main-dark font-title text-subheader-s mb-2">
                 6 timers vagter
@@ -111,10 +109,11 @@ export default function RolesCards() {
                 6 timers sammenhængende vagt på festivaldagen
               </p>
             </div>
-            <div className="flex justify-start">
+            <div className="relative w-full h-[60px] mt-4 translate-y-[5vh]">
+              <div className="absolute mx-auto inset-0.5 transform -translate-y-[5px] bg-main-pink transform -rotate-[2deg] w-[85%] "></div>
               <Link
                 to="6h" 
-                className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+                className="relative mx-auto w-[85%] text-center mx-auto block py-3 bg-main-dark text-white font-body text-accent font-medium -rotate-[1deg] z-10"
               >
                 Udforsk roller
               </Link>

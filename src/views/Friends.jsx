@@ -4,28 +4,26 @@ import cardBg3 from '/cardbg3.svg';
 import deleteIcon from '/delete.svg';
 import searchIcon from '/search.svg';
 import editIcon from '/edit.svg';
+import img1892 from '/1892.png';
+import img1090 from '/1090.png';
+import img5558 from '/5558.png';
+import img6472 from '/6472.png';
+import img1234 from '/1234.png';
 import defaultFriend from '/defaultfriend.svg';
+import shareIcon from '/share.svg';
+import infoIcon from '/info.svg';
 
 // Dummy users data
 const dummyUsers = [
-  { id: 1892, name: "Mikkel", lastname: "Søren", email: "sexysoeren@hotmail.com", role: null, team: null, profileImg: "1892.png" },
-  { id: 1090, name: "Mikkel", lastname: "Sørensen", email: "m.soerensen@mail.com", role: null, team: null, profileImg: "1090.png" },
-  { id: 5558, name: "Mikkel", lastname: "Jensen Sørensen", email: "mijose@mail.com", role: null, team: "Party Animals", profileImg: "5558.png" },
+  { id: 1892, name: "Mikkel", lastname: "Søren", email: "theogsoeren@hotmail.com", role: null, team: null, profileImg: img1892 },
+  { id: 1090, name: "Mikkel", lastname: "Sørensen", email: "m.soerensen@mail.com", role: null, team: null, profileImg: img1090 },
+  { id: 5558, name: "Mikkel", lastname: "Jensen Sørensen", email: "mijose@mail.com", role: null, team: "Party Animals", profileImg: img5558 },
   { id: 8794, name: "Ida", lastname: "Madsen", email: "madida@mail.com", role: null, team: null, profileImg: null },
-  { id: 6472, name: "Ida", lastname: "Madsen", email: "idamadsen@mail.com", role: "Renovation", team: "Festival Survivors", profileImg: "6742.png" },
+  { id: 6472, name: "Ida", lastname: "Madsen", email: "idamadsen@mail.com", role: "Renovation", team: "Festival Survivors", profileImg: img6472 },
   { id: 1948, name: "Ida", lastname: "Madsen Hansen", email: "ihanmad@gmail.com", role: "Fence Guard", team: "best guards", profileImg: null },
-  { id: 1234, name: "Freja", lastname: "Nielsen", email: "therealfreja@mail.com", role: null, team: null, profileImg: "1234.png" }
+  { id: 1234, name: "Freja", lastname: "Nielsen", email: "therealfreja@mail.com", role: null, team: null, profileImg: img1234 }
 ];
 
-// Helper function to get profile image URL
-const getProfileImg = (user) => {
-  if (!user?.profileImg) return defaultFriend;
-  try {
-    return require(`../public/${user.profileImg}`);
-  } catch {
-    return defaultFriend;
-  }
-};
 
 export default function Friends() {
   // Dummy user ID
@@ -138,7 +136,7 @@ export default function Friends() {
   };
 
   return (
-    <div className="min-h-screen bg-main-bgcolor p-4 space-y-6">
+    <div className="min-h-screen h-[125vh] bg-main-bgcolor p-4 space-y-6">
       {!friendTeam ? (
         // Initial view - No friends added yet
         <div className="w-[95vw] mx-auto">
@@ -146,19 +144,22 @@ export default function Friends() {
             Dit vennerhold
           </h1>
 
-          <div className="w-full bg-cover bg-center bg-cardbg3 p-6 relative">
+          <div className="w-[90vw] bg-cover bg-center bg-cardbg3 p-6 relative">
             <p className="text-main-dark font-body text-accent uppercase tracking-[var(--text-letter-spacing)] mb-2">
               Ingen venner tilføjet endnu
             </p>
             <p className="text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] mb-6">
               Inviter dine venner, opret et hold, og ansøg om frivillige roller sammen.
             </p>
-            <button
-              onClick={createFriendTeam}
-              className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
-            >
-              Inviter
-            </button>
+            <div className="relative w-full h-[60px] mt-4 translate-y-[6vh]">
+              <div className="absolute w-[100%] mx-auto inset-0 transform -translate-y-[5px] bg-main-pink rotate-[1deg]"></div>
+              <button
+                onClick={createFriendTeam}
+                className="relative mx-auto w-[98%] block py-3 bg-main-dark text-white font-body text-accent font-medium rotate-[2deg] z-10"
+              >
+                Inviter
+              </button>
+            </div>
           </div>
         </div>
       ) : (
@@ -166,7 +167,7 @@ export default function Friends() {
         <div className="space-y-6">
           {/* Search Card */}
           <div className="w-[95vw] mx-auto">
-            <div className="w-full bg-cover bg-center bg-cardbg3 p-6 relative">
+            <div className="w-[90vw]  bg-cover bg-center bg-cardbg3 p-6 relative">
               {/* Delete button */}
               <button
                 onClick={() => setFriendTeam(null)}
@@ -202,6 +203,23 @@ export default function Friends() {
                   />
                 </div>
               </form>
+              {(!searchQuery || searchResults.length === 0) && (
+              <div className="relative w-full h-[60px] mt-4 translate-y-[5vh]">
+                <div className="absolute mx-auto inset-0.5 transform -translate-y-[5px] bg-main-pink transform -rotate-[2deg] w-[85%] "></div>
+                <button
+                  type="button"
+                  className="relative mx-auto w-[85%] block py-3 bg-main-dark text-white font-body text-accent font-medium -rotate-[1deg] z-10
+                    flex items-center justify-center gap-6"
+                >
+                  <img
+                  src={shareIcon}
+                  alt="share icon"
+                  className="w-6 w-6"
+                  />
+                  Inviter venner
+                </button>
+              </div>
+              )}
 
               {/* Search Results */}
               {searchQuery && searchResults.length > 0 && (
@@ -213,7 +231,7 @@ export default function Friends() {
                       onClick={() => addToInvited(user)}
                     >
                       <img
-                        src={getProfileImg(user)}
+                        src={user.profileImg || defaultFriend}
                         alt={user.name}
                         className="w-12 h-12 rounded-full object-cover"
                       />
@@ -268,7 +286,7 @@ export default function Friends() {
                           <img src={deleteIcon} alt="Remove" className="h-4 w-4" />
                         </button>
                         <img
-                          src={getProfileImg(user)}
+                          src={user.profileImg || defaultFriend}
                           alt={user.name}
                           className="w-16 h-16 rounded-full object-cover"
                           onClick={() => addToMembers(user)}
@@ -287,28 +305,32 @@ export default function Friends() {
 
               {/* Send Invitations Button (only visible before sending) */}
               {!invitationsSent && friendTeam.invited.length > 0 && (
+              <div className="relative w-full h-[60px] mt-4 translate-y-[5vh]">
+                <div className="absolute w-[100%] mx-auto inset-0 transform -translate-y-[5px] bg-main-pink rotate-[1deg]"></div>
                 <button
                   onClick={sendInvitations}
-                  className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+                  className="relative mx-auto w-[98%] block py-3 bg-main-dark text-white font-body text-accent font-medium rotate-[2deg] z-10"
                 >
                   Send invitationer
                 </button>
+              </div>
               )}
             </div>
           </div>
 
           {/* Friend Team Card (always visible after team creation) */}
           {friendTeam && invitationsSent && (
-            <div className="w-[95vw] mx-auto">
+            <div className="w-[95vw] mx-auto pt-6">
               <h2 className="text-main-dark font-title text-subheader-s mb-4">
                 Dit vennerhold
               </h2>
-              <div className="w-full bg-cover bg-center bg-cardbg3 p-6 relative">
+              <div className="w-[90vw] bg-cover bg-center bg-cardbg3 p-6 relative">
                 {/* Team Name Label */}
                 <div className="flex justify-center mb-6">
                   <div className="relative inline-block">
                     <div className="absolute inset-0 bg-primary-dark transform rotate-[2deg] rounded-lg"></div>
-                    <div className="relative px-4 py-2 bg-white text-main-dark font-body text-body tracking-[var(--text-letter-spacing)] -rotate-[1deg] z-10 flex items-center">
+                    <div className="relative px-4 py-2 bg-white text-main-dark font-title text-accent tracking-[var(--text-letter-spacing)] -rotate-[1deg] 
+                        shadow-label z-10 flex items-center transform -translate-y-[3vh]">
                       {editingTeamName ? (
                         <input
                           type="text"
@@ -335,7 +357,7 @@ export default function Friends() {
 
                 {/* Accepted Members */}
                 <h3 className="text-main-dark font-body text-accent mb-4">
-                  Godkendt:
+                  Medlemmer:
                 </h3>
                 <div className="flex flex-wrap gap-4 mb-6">
                   {friendTeam.members.map(memberId => {
@@ -346,7 +368,7 @@ export default function Friends() {
                     return (
                       <div key={memberId} className="flex flex-col items-center">
                         <img
-                          src={getProfileImg(user)}
+                          src={user.profileImg || defaultFriend}
                           alt={user.name}
                           className="w-16 h-16 rounded-full object-cover"
                         />
@@ -384,7 +406,7 @@ export default function Friends() {
                       <img src={deleteIcon} alt="Remove" className="h-4 w-4" />
                     </button>
                     <img
-                      src={getProfileImg(user)}
+                      src={user.profileImg || defaultFriend}
                       alt={user.name}
                       className="w-16 h-16 rounded-full object-cover"
                       onClick={() => addToMembers(user)}
@@ -398,7 +420,12 @@ export default function Friends() {
                   </div>
                 ))}
               </div>
-              <div className="bg-main-light text-white font-body text-body p-3 rounded-lg mb-6">
+              <div className="w-[90vw] bg-main-light text-white font-body text-body p-3 mb-6 shadow-warn flex flex-row gap-4">
+                <img
+                  src={infoIcon}
+                  alt="share icon"
+                  className="w-6 w-6"
+                  />
                 Husk! Alle venner skal acceptere, før I kan ansøge om frivillige roller sammen.
               </div>
             </div>
@@ -406,10 +433,11 @@ export default function Friends() {
 
           {/* Volunteer Roles Button (only if no pending invitations and more than 1 member) */}
           {invitationsSent && friendTeam.invited.length === 0 && friendTeam.members.length > 1 && (
-            <div className="w-[95vw] mx-auto">
+            <div className="relative w-full h-[60px] mt-4 -translate-y-[1vh]">
+              <div className="absolute w-[100%] mx-auto inset-0 transform -translate-y-[5px] bg-main-pink rotate-[1deg]"></div>
               <button
                 onClick={() => navigate('/roles')}
-                className="w-full px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+                className="w-full px-6 py-2 bg-main-dark text-white font-body text-accent font-medium mx-auto w-[98%] block py-3 bg-main-dark text-white text-center font-body text-accent font-medium rotate-[2deg] z-10"
               >
                 Frivillige roller
               </button>
@@ -418,8 +446,8 @@ export default function Friends() {
 
           {/* Remove Confirmation Popup */}
           {showRemoveConfirmation && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-              <div className="bg-main-light p-6 rounded-lg max-w-md w-full text-center">
+            <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+              <div className="bg-main-light shadow-label p-6 max-w-md w-full text-center">
                 <p className="text-white font-body text-body mb-6">
                   Er du sikker på, at du vil fjerne invitationen?
                 </p>

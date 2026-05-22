@@ -7,8 +7,8 @@
   --color-primary-blue: #009AD5;
   --color-dark-blue: #26448C;
   --color-light-blue: #96D4E5;
-  --color-main-dark: #2F4195;
-  --color-main-light: #4098D6;
+  --color-main-dark: #26448C;
+  --color-main-light: #009AD5;
   --color-main-bgcolor: #DCECF1;
   --color-main-pink: #E3ABCA;
 
@@ -30,6 +30,7 @@
  
   --text-shadow-title: 3px 3px 0 #4098D6;
   --shadow-label: 3px 3px 0 #2F4195;
+  --shadow-warn: 3px 3px 0 #ff0000;
 
 
 }
@@ -48,6 +49,12 @@
 
 .bg-cardbg3{
   background-image: url('/cardbg3.svg');
+  background-size: cover;
+  background-position: center;  
+}
+
+.bg-friendcard{
+  background-image: url('/friendcard.svg');
   background-size: cover;
   background-position: center;  
 }

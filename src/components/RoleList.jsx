@@ -106,13 +106,13 @@ export default function RolesList() {
         {filteredRoles.map((role, index) => (
           <div
             key={index}
-            className="w-full h-[30vh] bg-cover bg-center bg-cardbg3 relative p-6"
+            className="w-[90vw] mx-auto h-[30vh] bg-cover bg-center bg-cardbg3 relative p-6"
           >
             {/* Age Requirement Label */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-0 right-0">
               <div className="relative inline-block">
                 <div className="absolute inset-0 bg-primary-dark transform rotate-[2deg] rounded-lg"></div>
-                <div className="relative px-3 py-1 bg-white text-main-dark font-body text-sm tracking-[var(--text-letter-spacing)] -rotate-[1deg] z-10">
+                <div className="relative px-3 py-1 shadow-label bg-main-pink text-white font-bold font-body text-sm tracking-[var(--text-letter-spacing)] rotate-[20deg] z-10">
                   {role.ageRequirement}
                 </div>
               </div>
@@ -128,10 +128,11 @@ export default function RolesList() {
                   {role.roleDescription}
                 </p>
               </div>
-              <div className="flex justify-start">
+              <div className="relative w-full flex justify-start h-[60px]">
+                <div className="absolute mx-auto inset-0.5 transform -translate-y-[5px] bg-main-pink w-[85%] h-[60px] -rotate-[2deg]"></div>
                 <button
                   onClick={() => handleRoleSelect(role)}
-                  className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium rounded-none hover:opacity-90 transition-opacity"
+                  className="relative mx-auto w-[85%] text-center block py-3 bg-main-dark text-white font-body text-accent font-medium -rotate-[1deg] z-10"
                 >
                   Søg
                 </button>

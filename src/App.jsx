@@ -10,6 +10,7 @@ import SignUp from './views/SignUp';
 import RolesCards from './components/RolescArds';
 import RoleList from './components/RoleList';
 import RoleDetail from './components/RoleDetail';
+import UnderConstruction from './views/UnderConstruction';
 import './App.css';
 
 
@@ -35,8 +36,12 @@ import './App.css';
           element: <Friends />
         },
         {
+          path: '/messages',
+          element: <UnderConstruction />
+        },
+        {
           path: '/profile',
-          element: <Profile />
+          element: <UnderConstruction />
         },
         {
           path: '/roles', 

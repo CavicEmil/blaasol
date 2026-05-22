@@ -168,8 +168,8 @@ export default function RoleDetail() {
 
       {/* Success Popup */}
       {showSuccess && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-light-blue p-6 rounded-lg max-w-md w-full text-center">
+        <div className="fixed inset-0  flex items-center justify-center z-50 p-4">
+          <div className="bg-light-blue shadow-label p-6 max-w-md w-full text-center">
             <h2 className="text-main-dark font-title text-subheader-s mb-4">
               {isTeamApplication ? "Din holdansøgning er sendt!" : "Din ansøgning er sendt!"}
             </h2>

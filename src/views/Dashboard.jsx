@@ -1,8 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import cardBg1 from '/cardbg1.svg';
-import cardBg2 from '/cardbg2.svg';
-import cardBg3 from '/cardbg3.svg';
 import defaultProfile from '/defaultprofile.svg';
 import defaultFriend from '/defaultfriend.svg';
 import editIcon from '/edit.svg';
@@ -105,7 +102,7 @@ export default function Dashboard() {
         </h2>
 
         <div
-          className="w-[95vw] h-[20vh] m-2 mx-auto bg-cardbg1 relative"
+          className="w-[95vw] h-[20vh] m-2 mx-auto bg-friendcard relative"
         >
           {/* Team Title (if exists) */}
           {displayData.teamTitle && (
@@ -115,8 +112,8 @@ export default function Dashboard() {
           )}
 
           {/* Search Icon (top right) */}
-          <Link to="/friends" className="absolute -top-6 -right-2 w-18 h-18">
-            <img src={searchIcon} alt="Search Friends" className="h-18 w-18" />
+          <Link to="/friends" className="absolute -top-6 -right-2 w-12 h-12">
+            <img src={searchIcon} alt="Search Friends" className="h-12 w-12" />
           </Link>
 
           {/* Friends List or Fallback Text */}
@@ -195,7 +192,7 @@ export default function Dashboard() {
                   <div className="absolute w-[100%] mx-auto inset-0 transform -translate-y-[5px] bg-main-pink rotate-[1deg]"></div>
                   <Link
                     to="/roles"
-                    className="px-6 py-2 bg-main-light text-white font-body text-accent font-medium mx-auto w-[98%] block py-3 bg-main-dark text-white text-center font-body text-accent font-medium rotate-[2deg] z-10"
+                    className="px-6 py-2 bg-main-dark text-white font-body text-accent font-medium mx-auto w-[98%] block py-3 bg-main-dark text-white text-center font-body text-accent font-medium rotate-[2deg] z-10"
                   >
                     Søg
                   </Link>
